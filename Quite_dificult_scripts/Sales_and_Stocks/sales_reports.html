@@ -1,0 +1,15 @@
+<!-- HTML -->
+<h1>Sales Report</h1>
+
+<table>
+  <tr>
+    <th>Product</th>
+    <th>Total Sales</th>
+  </tr>
+  {% for product in product_sales %}
+    <tr>
+      <td>{{ product.name }}</td>
+      <td>{{ product.total_sales }}</td>
+    </tr>
+  {% endfor %}
+</table>
