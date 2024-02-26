@@ -3,9 +3,10 @@
 import pygame
 import chess
 import chess.engine
+import os
 
 # Path to the Stockfish engine
-engine_path = "C:\Users\Usuario\Downloads\stockfish-windows-x86-64-modern\stockfish\stockfish-windows-x86-64-modern.exe"
+engine_path = r"C:\Users\Usuario\Downloads\stockfish-windows-x86-64-modern\stockfish\stockfish-windows-x86-64-modern.exe"
 
 # Initialize pygame
 pygame.init()
@@ -14,10 +15,13 @@ pygame.init()
 size = (800, 800)
 screen = pygame.display.set_mode(size)
 
+# Directory where the images for the chess pieces are located
+image_dir = r"C:\Users\Usuario\Desktop\Utiles\Proyectos\Python_Scripts\Quite_dificult_scripts\Chess_Game\images"
+
 # Load the images for the chess pieces
 pieces = {}
 for piece in ['bp', 'bn', 'bb', 'br', 'bq', 'bk', 'wp', 'wn', 'wb', 'wr', 'wq', 'wk']:
-    pieces[piece] = pygame.image.load(f"{piece}.png")
+    pieces[piece] = pygame.image.load(os.path.join(image_dir, f"{piece}.png"))
 
 # Initialize an empty chess board
 board = chess.Board()
@@ -63,8 +67,9 @@ while running and not board.is_checkmate() and not board.is_stalemate():
     # Draw the chess pieces
     for i in range(8):
         for j in range(8):
-            if board.piece_at(chess.square(i, 7-j)):
-                screen.blit(pieces[str(board.piece_at(chess.square(i, 7-j)))], pygame.Rect(i*100, j*100, 100, 100))
+            piece = board.piece_at(chess.square(i, 7-j))
+            if piece and str(piece) in pieces:
+                screen.blit(pieces[str(piece)], pygame.Rect(i*100, j*100, 100, 100))
 
     # Get the AI's move
     if not board.turn and not selected_piece:

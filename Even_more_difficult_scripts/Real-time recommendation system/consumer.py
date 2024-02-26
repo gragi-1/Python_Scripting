@@ -1,10 +1,11 @@
 # consumer.py
 
 from confluent_kafka import Consumer
-from sklearn.externals import joblib
+import joblib
 
 # Load your trained machine learning model
-model = joblib.load('model.pkl')
+# Make sure 'model.pkl' is in your current directory or provide the full path
+model = joblib.load(r"C:\Users\Usuario\Desktop\Útiles\Proyectos\Python_Scripts\Even_more_difficult_scripts\Real-time recommendation system\model.pkl")
 
 # Configure the Kafka consumer
 c = Consumer({
@@ -15,6 +16,11 @@ c = Consumer({
 
 # Subscribe to the 'user_behavior' topic
 c.subscribe(['user_behavior'])
+
+# Function to send recommendations
+def send_recommendations(user_id, recommendations):
+    # This is just a placeholder. Replace this with your actual implementation.
+    print(f"Send recommendations {recommendations} to user {user_id}")
 
 # Function to generate recommendations based on user behavior
 def generate_recommendations():
@@ -35,3 +41,6 @@ def generate_recommendations():
 
         # Send the recommendations back to your website or app
         send_recommendations(data['user_id'], recommendations)
+
+# Start generating recommendations
+generate_recommendations()
